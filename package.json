@@ -1,0 +1,46 @@
+{
+  "name": "numts",
+  "version": "1.0.0",
+  "author": "Andrea Silvi",
+  "type": "module",
+  "main": "./dist/node/index.js",
+  "browser": "./dist/web/index.js",
+  "types": "./dist/@types/index.d.ts",
+  "scripts": {
+    "test": "ts-mocha --timeout 60000 test/*.ts",
+    "build:prod": "webpack --mode production",
+    "build:prod:watch": "webpack --mode production --watch",
+    "prepublish:public": "npm run build:prod",
+    "publish:public": "npm publish --access public"
+  },
+  "keywords": [
+    "numts"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ansi-code/numts.git"
+  },
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ansi-code/numts/issues"
+  },
+  "homepage": "https://github.com/ansi-code/numts#readme",
+  "devDependencies": {
+    "@types/chai": "^4.3.4",
+    "@types/expect": "^24.3.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^18.13.0",
+    "chai": "^4.3.7",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "mocha": "^10.2.0",
+    "ts-loader": "^9.4.2",
+    "ts-mocha": "^10.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-merge": "^5.8.0",
+    "webpack-node-externals": "^3.0.0"
+  }
+}

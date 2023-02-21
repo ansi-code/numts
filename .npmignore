@@ -1,0 +1,6 @@
+.github
+.idea
+.gitignore
+.mocharc.json
+tsconfig.json
+webpack.config.js
