@@ -10,6 +10,7 @@
     "strict": true,
     "esModuleInterop": true,
     "baseUrl": ".",
+    "types": ["mocha", "node", "assemblyscript/std/portable"]
   },
   "ts-node": {
     "esm": true,

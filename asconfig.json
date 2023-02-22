@@ -1,0 +1,21 @@
+{
+  "entries": ["src/asc/index.asc.ts"],
+  "options": {
+    "bindings": "raw"
+  },
+  "targets": {
+    "debug": {
+      "outFile": "dist/asc/index.wasm",
+      "textFile": "dist/asc/index.wat",
+      "sourceMap": true,
+      "debug": true
+    },
+    "release": {
+      "outFile": "dist/asc/index.wasm",
+      "optimizeLevel": 3,
+      "shrinkLevel": 0,
+      "converge": false,
+      "noAssert": false
+    }
+  }
+}

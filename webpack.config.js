@@ -3,7 +3,6 @@ import {fileURLToPath} from 'url';
 import {merge as webpackMerge} from "webpack-merge";
 import nodeExternals from "webpack-node-externals";
 import {CleanWebpackPlugin} from "clean-webpack-plugin";
-import CopyPlugin from "copy-webpack-plugin";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -59,7 +58,6 @@ export default (env, argv) => ([
 
     webpackMerge(commonsConfig, {
         target: 'node',
-
 
         module: {
             rules: [
