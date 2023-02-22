@@ -106,3 +106,4 @@ dist
 # Custom
 
 package-lock.json
+src/wasm/asc/build

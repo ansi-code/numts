@@ -5,13 +5,13 @@
   },
   "targets": {
     "debug": {
-      "outFile": "dist/wasm/asc/index.wasm",
-      "textFile": "dist/wasm/asc/index.wat",
+      "outFile": "src/wasm/asc/build/index.wasm",
+      "textFile": "src/wasm/asc/build/index.wat",
       "sourceMap": true,
       "debug": true
     },
     "release": {
-      "outFile": "dist/wasm/asc/index.wasm",
+      "outFile": "src/wasm/asc/build/index.wasm",
       "optimizeLevel": 3,
       "shrinkLevel": 0,
       "converge": false,
