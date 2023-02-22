@@ -19,7 +19,7 @@ export class NdArray<ArrayType extends TypedArray<DataType>, DataType extends nu
             throw new Error('Shapes do not match');
 
         for (let i = 0; i < this.data.length; i++)
-            this.data[i] = (this.data[i] + this.data[i]) as DataType;
+            this.data[i] = (this.data[i] + b.data[i]) as DataType;
 
         return this;
     }

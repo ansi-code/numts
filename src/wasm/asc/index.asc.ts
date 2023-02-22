@@ -1,4 +1,4 @@
-import {NdArray} from "./ndarray.asc";
+import {NdArray} from "../../common";
 
 declare type Int8NdArray = NdArray<Int8Array, i8>;
 declare type Uint8NdArray = NdArray<Uint8Array, u8>;

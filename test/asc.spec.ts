@@ -1,11 +1,10 @@
-import { instantiate } from "../dist/asc";
-import * as fs from "fs";
+import wasm from "../src/wasm";
 
-describe("Asm tests", async () => {
+describe("ASC tests", async () => {
 
     it("Check 1", async () => {
-        const asm = fs.readFileSync("./dist/asc/index.wasm");
-        const nt = await instantiate(await WebAssembly.compile(asm), {env:{}});
+        const nt = await wasm();
+        //const nt = await (await import("../src/wasm")).default();
         const a = nt.Int8NdArrayNew(new Int8Array([1, 2, 3, 4, 5, 6]), new Uint8Array([2, 3]));
         const b = nt.Int8NdArrayNew(new Int8Array([-1, -2, -3, -4, -5, -6]), new Uint8Array([2, 3]));
         const c = nt.Int8NdArrayAdd(a, b);
