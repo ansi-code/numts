@@ -1,12 +1,23 @@
-import {NdArray} from "../src/cpu";
+import * as cpu from "../src/cpu";
+import {NdArray} from "../src"
 
 describe("Typescript tests", async () => {
 
     it("Check 1", async () => {
-        const a = new NdArray(new Int8Array([1, 2, 3, 4, 5, 6]), new Uint8Array([2, 3]));
-        const b = new NdArray(new Int8Array([-1, -2, -3, -4, -5, -6]), new Uint8Array([2, 3]));
-        const c = a.add(b);
-        console.log(c.data.toString());
+        const nt = await cpu.default();
+        const a = nt.NdInt8ArrayNew(new Int8Array([1, 2, 3, 4, 5, 6]), new Uint32Array([2, 3]));
+        const b = nt.NdInt8ArrayNew(new Int8Array([-1, -2, -3, -4, -5, -6]), new Uint32Array([2, 3]));
+        console.log(nt.NdInt8ArrayGetData(a));
+        nt.NdInt8ArrayAdd(a, b);
+        console.log(nt.NdInt8ArrayGetData(a));
+    }).timeout(60000);
+
+    it("Check 2", async () => {
+        const a = await NdArray.From([1, 2, 3, 4, 5, 6], [2, 3], "i8", "cpu");
+        const b = await NdArray.From([-1, -2, -3, -4, -5, -6], [2, 3], "i8", "cpu");
+        console.log(a.getData());
+        a.add(b);
+        console.log(a.getData());
     }).timeout(60000);
 
 });
