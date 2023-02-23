@@ -1,4 +1,4 @@
-import * as nt from "../src/wasm";
+import * as nt from "../src/backend/wasm";
 import {NdArray} from "../src";
 
 describe("ASC tests", async () => {

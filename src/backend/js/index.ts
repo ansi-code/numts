@@ -13,15 +13,16 @@ declare global {
         | Float64Array;
 }
 
-export const F = common
+export const F = common;
+
 export type FType = typeof F;
 
 export type IUint8Type = ReturnType<typeof F.NdUint8ArrayNew>;
 export type IInt8Type = ReturnType<typeof F.NdInt8ArrayNew>;
 
 export type IType =
-    | ReturnType<typeof F.NdUint8ArrayNew>
-    | ReturnType<typeof F.NdInt8ArrayNew>;
+    | IUint8Type
+    | IInt8Type;
 
 export default async function (): Promise<FType> {
     return common;

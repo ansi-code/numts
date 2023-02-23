@@ -1,17 +1,16 @@
 {
-  "entries": ["src/wasm/asc/index.asc.ts"],
+  "entries": ["src/backend/wasm/asc/index.asc.ts"],
   "options": {
-    "bindings": "raw"
+    "bindings": "raw",
+    "outFile": "src/backend/wasm/asc/build/index.wasm"
   },
   "targets": {
     "debug": {
-      "outFile": "src/wasm/asc/build/index.wasm",
-      "textFile": "src/wasm/asc/build/index.wat",
+      "textFile": "src/backend/wasm/asc/build/index.wat",
       "sourceMap": true,
       "debug": true
     },
     "release": {
-      "outFile": "src/wasm/asc/build/index.wasm",
       "optimizeLevel": 3,
       "shrinkLevel": 0,
       "converge": false,

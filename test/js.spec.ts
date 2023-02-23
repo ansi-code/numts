@@ -1,4 +1,4 @@
-import * as cpu from "../src/cpu";
+import * as cpu from "../src/backend/js";
 import {NdArray} from "../src"
 
 describe("Typescript tests", async () => {
@@ -13,8 +13,8 @@ describe("Typescript tests", async () => {
     }).timeout(60000);
 
     it("Check 2", async () => {
-        const a = await NdArray.From([1, 2, 3, 4, 5, 6], [2, 3], "i8", "cpu");
-        const b = await NdArray.From([-1, -2, -3, -4, -5, -6], [2, 3], "i8", "cpu");
+        const a = await NdArray.From([1, 2, 3, 4, 5, 6], [2, 3], "i8", "js");
+        const b = await NdArray.From([-1, -2, -3, -4, -5, -6], [2, 3], "i8", "js");
         console.log(a.getData());
         a.add(b);
         console.log(a.getData());

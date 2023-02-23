@@ -24,36 +24,22 @@ Here's an example:
 ```js
 import { NdArray } from 'numts';
 
-const a = new NdArray([[1, 2, 3], [4, 5, 6]]);
-const b = new NdArray([[-1, -2, -3], [-4, -5, -6]]);
-
-const c = a.add(b); // Returns [[0, 0, 0], [0, 0, 0]]
+const a = await NdArray.From([1, 2, 3, 4, 5, 6], [2, 3], "i8");
+const b = await NdArray.From([-1, -2, -3, -4, -5, -6], [2, 3], "i8");
+a.add(b);
 ```
 
-### Mathematical functions
+### Support for WebAssembly
 
-NumTs provides a range of mathematical functions that you can use to perform numerical operations.
-Here's an example:
-
-```js
-import { exp } from 'numts';
-
-const a = 2;
-const result = exp(a); // Returns 7.3890560989306495
-```
-
-### Linear algebra
-
-NumTs provides a range of functions that you can use to perform linear algebra operations.
+NumTs provides a range of functions that you can use to perform linear algebra operations leveraging on webassembly performances.
 Here's an example:
 
 ```js
 import { NdArray } from 'numts';
 
-const a = new NdArray([[1, 2], [3, 4]]);
-const b = new NdArray([[1, 2], [2, 1]]);
-
-const c = a.dot(b); // Returns [[5, 4], [11, 10]]
+const a = await NdArray.From([1, 2, 3, 4, 5, 6], [2, 3], "i8", "wasm");
+const b = await NdArray.From([-1, -2, -3, -4, -5, -6], [2, 3], "i8", "wasm");
+a.dot(b);
 ```
 
 ## Contributing
