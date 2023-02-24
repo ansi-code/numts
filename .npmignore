@@ -3,8 +3,7 @@
 .gitignore
 .mocharc.json
 
-src/**/*.ts
-!src/**/*.d.ts
+src
 
 tsconfig.json
 asconfig.json
