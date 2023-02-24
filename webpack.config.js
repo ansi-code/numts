@@ -36,7 +36,7 @@ const commonsConfig = {
     },
 
     optimization: {
-        minimize: false,
+        minimize: true,
     }
 }
 
