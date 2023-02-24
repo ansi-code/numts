@@ -27,6 +27,7 @@ export type IType =
     | IFloat64Type;
 
 export default async function (): Promise<FType> {
-    const bytes = Buffer.from(wasm, 'base64');
+
+    const bytes = await (await fetch("data:application/octet-binary;base64," + wasm)).arrayBuffer();
     return ABI.instantiate(await WebAssembly.compile(bytes), {env: {}});
 }

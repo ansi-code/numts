@@ -1,7 +1,7 @@
 import * as js from "./backend/js";
 import * as wasm from "./backend/wasm";
 
-type TypedArray =
+export type TypedArray =
     | Int8Array
     | Uint8Array
     | Uint8ClampedArray

@@ -1,6 +1,6 @@
 {
   "name": "numts",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Andrea Silvi",
   "type": "module",
   "main": "./dist/node/index.js",
@@ -13,7 +13,8 @@
     "pipeline:asc": "npm run build:asc && npm run encode:asc",
     "build:prod": "webpack --mode production",
     "build:prod:watch": "webpack --mode production --watch",
-    "prepublish:public": "npm run pipeline:asc && npm run build:prod",
+    "postinstall": "npm run pipeline:asc",
+    "prepublish": "npm run pipeline:asc && npm run build:prod",
     "publish:public": "npm publish --access public"
   },
   "keywords": [

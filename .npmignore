@@ -4,3 +4,6 @@
 .mocharc.json
 tsconfig.json
 webpack.config.js
+test
+asconfig.json
+src
