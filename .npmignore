@@ -2,8 +2,13 @@
 .idea
 .gitignore
 .mocharc.json
+
+src/**/*.ts
+!src/**/*.d.ts
+
 tsconfig.json
-webpack.config.js
-test
 asconfig.json
-src
+webpack.config.js
+
+test
+demo
