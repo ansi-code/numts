@@ -30,10 +30,14 @@ export function TypedArrayNew<TArray extends TypedArray<T>, T>(length: u32, type
             return changetype<TArray>(new Float32Array(length));
         case DataType.f64:
             return changetype<TArray>(new Float64Array(length));
+        default:
+            throw Error("Invalid DataType");
     }
-    return changetype<TArray>(new Float64Array(length));
 }
 
 export function TypedArrayNewFilled<TArray extends TypedArray<T>, T extends number>(length: u32, type: DataType, value: T): TArray {
-    return changetype<TArray>(TypedArrayNew<TArray, T>(length, type).fill(value, 0, length));
+    const res = TypedArrayNew<TArray, T>(length, type);
+    if (value !== 0)
+        res.fill(value, 0, length);
+    return res;
 }

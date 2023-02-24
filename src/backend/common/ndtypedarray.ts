@@ -1,4 +1,4 @@
-import {DataType, TypedArrayNew} from "./typedarray";
+import {DataType} from "./typedarray";
 
 export class NdTypedArray<TArray extends TypedArray<T>, T> {
     public shape: Int32Array;
@@ -12,8 +12,10 @@ export class NdTypedArray<TArray extends TypedArray<T>, T> {
         this.type = type;
 
         this.strides = new Int32Array(shape.length);
-        for (let stride = 1, i = shape.length - 1; i >= 0; i--)
-            this.strides[i] = (stride *= shape[i]);
+        for (let stride = 1, i = shape.length - 1; i >= 0; i--) {
+            this.strides[i] = stride;
+            stride *= shape[i];
+        }
     }
 }
 
@@ -69,58 +71,42 @@ export function NdTypedArrayUnravel<TArray extends TypedArray<T>, T>(self: NdTyp
     return offset;
 }
 
-export function NdTypedArrayArgmax<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32 = -1): NdTypedArray<TArray, T> {
-    const nDims = self.shape.length;
-    if (axis < -nDims || axis >= nDims) {
-        throw new Error("Invalid axis value");
-    }
-    const reducedShape = new Int32Array(nDims - 1);
-    let axisStride = 0;
-    if (axis >= 0) {
-        axisStride = self.strides[axis];
-        for (let i = 0, j = 0; i < nDims; i++) {
-            if (i !== axis) {
-                reducedShape[j++] = self.shape[i];
-            }
-        }
-    } else { // axis == -1
-        axisStride = self.strides[nDims - 1];
-        for (let i = 0; i < nDims - 1; i++) {
-            reducedShape[i] = self.shape[i];
+export function NdTypedArrayArgmax<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32 = -1): NdTypedArray<Int32Array, i32> {
+    const ndim = self.shape.length;
+    if (axis < -ndim || axis >= ndim) throw new Error("Invalid axis");
+    if (axis < 0) axis += ndim;
+
+    const resultShape = new Int32Array(ndim - 1);
+    let resultLength = 1;
+    for (let i = 0, j = 0; i < ndim; i++) {
+        if (i !== axis) {
+            resultShape[j++] = self.shape[i];
+            resultLength *= self.shape[i];
         }
     }
-    const reducedData = TypedArrayNew<TArray, T>(reducedShape[0], self.type);
-    let maxIndices = new Int32Array(reducedShape[0]);
-    for (let i = 0; i < reducedShape[0]; i++) {
+    //console.log("aaa")
+
+    const result = new NdTypedArray<Int32Array, i32>(resultShape, new Int32Array(resultLength), DataType.i32);
+    const axisStride = self.strides[axis];
+    const axisLength = self.shape[axis];
+    //console.log(axisStride.toString())
+    //console.log(axisLength.toString())
+    //console.log("bbb")
+
+    for (let i = 0; i < resultLength; i++) {
         let maxIndex = 0;
-        let maxValue = self.data[i * axisStride];
-        for (let j = 1; j < self.shape[axis]; j++) {
-            const value = self.data[i * axisStride + j * self.strides[axis]];
-            if (value > maxValue) {
-                maxValue = value;
+        let maxVal = self.data[i * axisStride];
+        ///console.log("ccc")
+        for (let j = 0; j < axisLength; j++) {
+            const val = self.data[i * axisLength + j * axisStride]; // TODO: Fix here
+            //console.log("ddd")
+            if (val > maxVal) {
                 maxIndex = j;
+                maxVal = val;
             }
         }
-        maxIndices[i] = maxIndex;
-        for (let j = 0, k = 0; j < nDims; j++) {
-            if (j !== axis) {
-                k++;
-                reducedData[i * reducedShape[k - 1]] = self.data[i * axisStride + maxIndex * self.strides[axis] + self.strides[j]];
-            }
-        }
+        result.data[i] = maxIndex;
     }
-    const newShape = new Int32Array(nDims);
-    if (axis >= 0) {
-        for (let i = 0, j = 0; i < nDims; i++) {
-            if (i !== axis) {
-                newShape[i] = self.shape[j++];
-            }
-        }
-    } else { // axis == -1
-        for (let i = 0; i < nDims - 1; i++) {
-            newShape[i] = self.shape[i];
-        }
-        newShape[nDims - 1] = 1;
-    }
-    return new NdTypedArray<TArray, T>(newShape, reducedData, self.type);
+
+    return result;
 }

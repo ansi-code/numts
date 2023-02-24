@@ -33,6 +33,6 @@ export function NdUint8ClampedArrayGetData(self: NdTypedArray<Uint8ClampedArray,
     return NdTypedArrayGetData<Uint8ClampedArray, u8>(self);
 }
 
-export function NdUint8ClampedArrayArgmax(self: NdTypedArray<Uint8ClampedArray, u8>, axis: i32 = -1): NdTypedArray<Uint8ClampedArray, u8> {
+export function NdUint8ClampedArrayArgmax(self: NdTypedArray<Uint8ClampedArray, u8>, axis: i32 = -1): NdTypedArray<Int32Array, i32> {
     return NdTypedArrayArgmax<Uint8ClampedArray, u8>(self, axis);
 }

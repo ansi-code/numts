@@ -163,76 +163,101 @@ export class NdArray {
         }
     }
 
-    public get(index: Int32Array): number {
+    public get(index: Array<number>): number {
         switch (this.t) {
             case "i8":
-                return this.f.NdInt8ArrayGet(this.i as js.IInt8Type & wasm.IInt8Type, index);
+                return this.f.NdInt8ArrayGet(this.i as js.IInt8Type & wasm.IInt8Type, new Int32Array(index));
             case "u8":
-                return this.f.NdUint8ArrayGet(this.i as js.IUint8Type & wasm.IUint8Type, index);
+                return this.f.NdUint8ArrayGet(this.i as js.IUint8Type & wasm.IUint8Type, new Int32Array(index));
             case "u8c":
-                return this.f.NdUint8ClampedArrayGet(this.i as js.IUint8ClampedType & wasm.IUint8ClampedType, index);
+                return this.f.NdUint8ClampedArrayGet(this.i as js.IUint8ClampedType & wasm.IUint8ClampedType, new Int32Array(index));
             case "i16":
-                return this.f.NdInt16ArrayGet(this.i as js.IInt16Type & wasm.IInt16Type, index);
+                return this.f.NdInt16ArrayGet(this.i as js.IInt16Type & wasm.IInt16Type, new Int32Array(index));
             case "u16":
-                return this.f.NdUint16ArrayGet(this.i as js.IUint16Type & wasm.IUint16Type, index);
+                return this.f.NdUint16ArrayGet(this.i as js.IUint16Type & wasm.IUint16Type, new Int32Array(index));
             case "i32":
-                return this.f.NdInt32ArrayGet(this.i as js.IInt32Type & wasm.IInt32Type, index);
+                return this.f.NdInt32ArrayGet(this.i as js.IInt32Type & wasm.IInt32Type, new Int32Array(index));
             case "u32":
-                return this.f.NdUint32ArrayGet(this.i as js.IUint32Type & wasm.IUint32Type, index);
+                return this.f.NdUint32ArrayGet(this.i as js.IUint32Type & wasm.IUint32Type, new Int32Array(index));
             case "f32":
-                return this.f.NdFloat32ArrayGet(this.i as js.IFloat32Type & wasm.IFloat32Type, index);
+                return this.f.NdFloat32ArrayGet(this.i as js.IFloat32Type & wasm.IFloat32Type, new Int32Array(index));
             case "f64":
-                return this.f.NdFloat64ArrayGet(this.i as js.IFloat64Type & wasm.IFloat64Type, index);
+                return this.f.NdFloat64ArrayGet(this.i as js.IFloat64Type & wasm.IFloat64Type, new Int32Array(index));
             default:
                 throw Error("Invalid DataType");
         }
     }
 
-    public set(index: Int32Array, value: number): void {
+    public set(index: Array<number>, value: number): void {
         switch (this.t) {
             case "i8":
-                return this.f.NdInt8ArraySet(this.i as js.IInt8Type & wasm.IInt8Type, index, value);
+                return this.f.NdInt8ArraySet(this.i as js.IInt8Type & wasm.IInt8Type, new Int32Array(index), value);
             case "u8":
-                return this.f.NdUint8ArraySet(this.i as js.IUint8Type & wasm.IUint8Type, index, value);
+                return this.f.NdUint8ArraySet(this.i as js.IUint8Type & wasm.IUint8Type, new Int32Array(index), value);
             case "u8c":
-                return this.f.NdUint8ClampedArraySet(this.i as js.IUint8ClampedType & wasm.IUint8ClampedType, index, value);
+                return this.f.NdUint8ClampedArraySet(this.i as js.IUint8ClampedType & wasm.IUint8ClampedType, new Int32Array(index), value);
             case "i16":
-                return this.f.NdInt16ArraySet(this.i as js.IInt16Type & wasm.IInt16Type, index, value);
+                return this.f.NdInt16ArraySet(this.i as js.IInt16Type & wasm.IInt16Type, new Int32Array(index), value);
             case "u16":
-                return this.f.NdUint16ArraySet(this.i as js.IUint16Type & wasm.IUint16Type, index, value);
+                return this.f.NdUint16ArraySet(this.i as js.IUint16Type & wasm.IUint16Type, new Int32Array(index), value);
             case "i32":
-                return this.f.NdInt32ArraySet(this.i as js.IInt32Type & wasm.IInt32Type, index, value);
+                return this.f.NdInt32ArraySet(this.i as js.IInt32Type & wasm.IInt32Type, new Int32Array(index), value);
             case "u32":
-                return this.f.NdUint32ArraySet(this.i as js.IUint32Type & wasm.IUint32Type, index, value);
+                return this.f.NdUint32ArraySet(this.i as js.IUint32Type & wasm.IUint32Type, new Int32Array(index), value);
             case "f32":
-                return this.f.NdFloat32ArraySet(this.i as js.IFloat32Type & wasm.IFloat32Type, index, value);
+                return this.f.NdFloat32ArraySet(this.i as js.IFloat32Type & wasm.IFloat32Type, new Int32Array(index), value);
             case "f64":
-                return this.f.NdFloat64ArraySet(this.i as js.IFloat64Type & wasm.IFloat64Type, index, value);
+                return this.f.NdFloat64ArraySet(this.i as js.IFloat64Type & wasm.IFloat64Type, new Int32Array(index), value);
             default:
                 throw Error("Invalid DataType");
         }
     }
 
-    public unravel(index: Int32Array): number {
+    public unravel(index: Array<number>): number {
         switch (this.t) {
             case "i8":
-                return this.f.NdInt8ArrayUnravel(this.i as js.IInt8Type & wasm.IInt8Type, index);
+                return this.f.NdInt8ArrayUnravel(this.i as js.IInt8Type & wasm.IInt8Type, new Int32Array(index));
             case "u8":
-                return this.f.NdUint8ArrayUnravel(this.i as js.IUint8Type & wasm.IUint8Type, index);
+                return this.f.NdUint8ArrayUnravel(this.i as js.IUint8Type & wasm.IUint8Type, new Int32Array(index));
             case "u8c":
-                return this.f.NdUint8ClampedArrayUnravel(this.i as js.IUint8ClampedType & wasm.IUint8ClampedType, index);
+                return this.f.NdUint8ClampedArrayUnravel(this.i as js.IUint8ClampedType & wasm.IUint8ClampedType, new Int32Array(index));
             case "i16":
-                return this.f.NdInt16ArrayUnravel(this.i as js.IInt16Type & wasm.IInt16Type, index);
+                return this.f.NdInt16ArrayUnravel(this.i as js.IInt16Type & wasm.IInt16Type, new Int32Array(index));
             case "u16":
-                return this.f.NdUint16ArrayUnravel(this.i as js.IUint16Type & wasm.IUint16Type, index);
+                return this.f.NdUint16ArrayUnravel(this.i as js.IUint16Type & wasm.IUint16Type, new Int32Array(index));
             case "i32":
-                return this.f.NdInt32ArrayUnravel(this.i as js.IInt32Type & wasm.IInt32Type, index);
+                return this.f.NdInt32ArrayUnravel(this.i as js.IInt32Type & wasm.IInt32Type, new Int32Array(index));
             case "u32":
-                return this.f.NdUint32ArrayUnravel(this.i as js.IUint32Type & wasm.IUint32Type, index);
+                return this.f.NdUint32ArrayUnravel(this.i as js.IUint32Type & wasm.IUint32Type, new Int32Array(index));
             case "f32":
-                return this.f.NdFloat32ArrayUnravel(this.i as js.IFloat32Type & wasm.IFloat32Type, index);
+                return this.f.NdFloat32ArrayUnravel(this.i as js.IFloat32Type & wasm.IFloat32Type, new Int32Array(index));
             case "f64":
-                return this.f.NdFloat64ArrayUnravel(this.i as js.IFloat64Type & wasm.IFloat64Type, index);
+                return this.f.NdFloat64ArrayUnravel(this.i as js.IFloat64Type & wasm.IFloat64Type, new Int32Array(index));
+            default:
+                throw Error("Invalid DataType");
+        }
+    }
+
+    public argmax(axis: number = -1): NdArray {
+        switch (this.t) {
+            case "i8":
+                return new NdArray(this.f, this.f.NdInt8ArrayArgmax(this.i as js.IInt8Type & wasm.IInt8Type, axis), this.t);
+            case "u8":
+                return new NdArray(this.f, this.f.NdUint8ArrayArgmax(this.i as js.IUint8Type & wasm.IUint8Type, axis), this.t);
+            case "u8c":
+                return new NdArray(this.f, this.f.NdUint8ClampedArrayArgmax(this.i as js.IUint8ClampedType & wasm.IUint8ClampedType, axis), this.t);
+            case "i16":
+                return new NdArray(this.f, this.f.NdInt16ArrayArgmax(this.i as js.IInt16Type & wasm.IInt16Type, axis), this.t);
+            case "u16":
+                return new NdArray(this.f, this.f.NdUint16ArrayArgmax(this.i as js.IUint16Type & wasm.IUint16Type, axis), this.t);
+            case "i32":
+                return new NdArray(this.f, this.f.NdInt32ArrayArgmax(this.i as js.IInt32Type & wasm.IInt32Type, axis), this.t);
+            case "u32":
+                return new NdArray(this.f, this.f.NdUint32ArrayArgmax(this.i as js.IUint32Type & wasm.IUint32Type, axis), this.t);
+            case "f32":
+                return new NdArray(this.f, this.f.NdFloat32ArrayArgmax(this.i as js.IFloat32Type & wasm.IFloat32Type, axis), this.t);
+            case "f64":
+                return new NdArray(this.f, this.f.NdFloat64ArrayArgmax(this.i as js.IFloat64Type & wasm.IFloat64Type, axis), this.t);
             default:
                 throw Error("Invalid DataType");
         }

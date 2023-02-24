@@ -33,6 +33,6 @@ export function NdUint32ArrayGetData(self: NdTypedArray<Uint32Array, u32>): Uint
     return NdTypedArrayGetData<Uint32Array, u32>(self);
 }
 
-export function NdUint32ArrayArgmax(self: NdTypedArray<Uint32Array, u32>, axis: i32 = -1): NdTypedArray<Uint32Array, u32> {
+export function NdUint32ArrayArgmax(self: NdTypedArray<Uint32Array, u32>, axis: i32 = -1): NdTypedArray<Int32Array, i32> {
     return NdTypedArrayArgmax<Uint32Array, u32>(self, axis);
 }

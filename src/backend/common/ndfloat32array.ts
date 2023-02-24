@@ -33,6 +33,6 @@ export function NdFloat32ArrayGetData(self: NdTypedArray<Float32Array, f32>): Fl
     return NdTypedArrayGetData<Float32Array, f32>(self);
 }
 
-export function NdFloat32ArrayArgmax(self: NdTypedArray<Float32Array, f32>, axis: i32 = -1): NdTypedArray<Float32Array, f32> {
+export function NdFloat32ArrayArgmax(self: NdTypedArray<Float32Array, f32>, axis: i32 = -1): NdTypedArray<Int32Array, i32> {
     return NdTypedArrayArgmax<Float32Array, f32>(self, axis);
 }
