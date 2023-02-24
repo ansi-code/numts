@@ -13,6 +13,8 @@ declare global {
         | Float64Array;
 }
 
+globalThis.changetype = <T>(value: any): T => (value as T);
+
 export const F = common;
 
 export type FType = typeof F;

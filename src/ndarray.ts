@@ -41,23 +41,23 @@ export class NdArray {
         const f = await GetBackend(backend);
         switch (type) {
             case "i8":
-                return new NdArray(f, f.NdInt8ArrayNew(new Int8Array(data), new Uint32Array(shape)), type);
+                return new NdArray(f, f.NdInt8ArrayNew(new Int8Array(data), new Int32Array(shape)), type);
             case "u8":
-                return new NdArray(f, f.NdUint8ArrayNew(new Uint8Array(data), new Uint32Array(shape)), type);
+                return new NdArray(f, f.NdUint8ArrayNew(new Uint8Array(data), new Int32Array(shape)), type);
             case "u8c":
-                return new NdArray(f, f.NdUint8ClampedArrayNew(new Uint8ClampedArray(data), new Uint32Array(shape)), type);
+                return new NdArray(f, f.NdUint8ClampedArrayNew(new Uint8ClampedArray(data), new Int32Array(shape)), type);
             case "i16":
-                return new NdArray(f, f.NdInt16ArrayNew(new Int16Array(data), new Uint32Array(shape)), type);
+                return new NdArray(f, f.NdInt16ArrayNew(new Int16Array(data), new Int32Array(shape)), type);
             case "u16":
-                return new NdArray(f, f.NdUint16ArrayNew(new Uint16Array(data), new Uint32Array(shape)), type);
+                return new NdArray(f, f.NdUint16ArrayNew(new Uint16Array(data), new Int32Array(shape)), type);
             case "i32":
-                return new NdArray(f, f.NdInt32ArrayNew(new Int32Array(data), new Uint32Array(shape)), type);
+                return new NdArray(f, f.NdInt32ArrayNew(new Int32Array(data), new Int32Array(shape)), type);
             case "u32":
-                return new NdArray(f, f.NdUint32ArrayNew(new Uint32Array(data), new Uint32Array(shape)), type);
+                return new NdArray(f, f.NdUint32ArrayNew(new Uint32Array(data), new Int32Array(shape)), type);
             case "f32":
-                return new NdArray(f, f.NdFloat32ArrayNew(new Float32Array(data), new Uint32Array(shape)), type);
+                return new NdArray(f, f.NdFloat32ArrayNew(new Float32Array(data), new Int32Array(shape)), type);
             case "f64":
-                return new NdArray(f, f.NdFloat64ArrayNew(new Float64Array(data), new Uint32Array(shape)), type);
+                return new NdArray(f, f.NdFloat64ArrayNew(new Float64Array(data), new Int32Array(shape)), type);
             default:
                 throw Error("Invalid DataType");
         }
@@ -163,7 +163,7 @@ export class NdArray {
         }
     }
 
-    public get(index: Uint32Array): number {
+    public get(index: Int32Array): number {
         switch (this.t) {
             case "i8":
                 return this.f.NdInt8ArrayGet(this.i as js.IInt8Type & wasm.IInt8Type, index);
@@ -188,7 +188,7 @@ export class NdArray {
         }
     }
 
-    public set(index: Uint32Array, value: number): void {
+    public set(index: Int32Array, value: number): void {
         switch (this.t) {
             case "i8":
                 return this.f.NdInt8ArraySet(this.i as js.IInt8Type & wasm.IInt8Type, index, value);
@@ -213,7 +213,7 @@ export class NdArray {
         }
     }
 
-    public unravel(index: Uint32Array): number {
+    public unravel(index: Int32Array): number {
         switch (this.t) {
             case "i8":
                 return this.f.NdInt8ArrayUnravel(this.i as js.IInt8Type & wasm.IInt8Type, index);
