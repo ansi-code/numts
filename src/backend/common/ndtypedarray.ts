@@ -1,4 +1,4 @@
-import {DataType, TypedArrayArgQuickSort, TypedArrayEqual, TypedArrayFrom, TypedArrayFromNumberArray, TypedArrayNew} from "./typedarray";
+import {DataType, TypedArrayArgQuickSort, TypedArrayEqual, TypedArrayFrom, TypedArrayFromNumberArray, TypedArrayNew, TypedArrayRandom} from "./typedarray";
 
 export class NdTypedArray<TArray extends TypedArray<T>, T> {
     public data: TArray;
@@ -24,6 +24,11 @@ export function NdTypedArrayNew<TArray extends TypedArray<T>, T>(data: TArray, s
         throw new Error('Data and shape do not match');
 
     return new NdTypedArray<TArray, T>(data, shape, type);
+}
+
+export function NdTypedArrayRandom<TArray extends TypedArray<T>, T extends number>(shape: Int32Array, type: DataType): NdTypedArray<TArray, T> {
+    const length = shape.reduce((a, b) => a * b, 1.0);
+    return new NdTypedArray<TArray, T>(TypedArrayRandom<TArray, T>(length as u32, type), shape, type);
 }
 
 export function NdTypedArrayGetShape<TArray extends TypedArray<T>, T>(self: NdTypedArray<TArray, T>): Int32Array {

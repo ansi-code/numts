@@ -9,6 +9,10 @@ export function NdInt8ArrayNew(data: TArray, shape: Int32Array): ndta.NdTypedArr
     return ndta.NdTypedArrayNew<TArray, T>(data, shape, DataType);
 }
 
+export function NdInt8ArrayRandom(shape: Int32Array): ndta.NdTypedArray<TArray, T> {
+    return ndta.NdTypedArrayRandom<TArray, T>(shape, DataType);
+}
+
 export function NdInt8ArrayGetShape(self: ndta.NdTypedArray<TArray, T>): Int32Array {
     return ndta.NdTypedArrayGetShape<TArray, T>(self);
 }

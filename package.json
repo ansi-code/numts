@@ -1,6 +1,6 @@
 {
   "name": "numts",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "author": "Andrea Silvi",
   "type": "module",
   "main": "./dist/node/index.js",

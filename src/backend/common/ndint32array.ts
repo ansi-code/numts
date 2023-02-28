@@ -1,5 +1,6 @@
 import * as ta from "./typedarray";
 import * as ndta from "./ndtypedarray";
+import {NdTypedArray} from "./ndtypedarray";
 
 type TArray = Int32Array;
 type T = i32;
@@ -7,6 +8,10 @@ const DataType = ta.DataType.i32;
 
 export function NdInt32ArrayNew(data: TArray, shape: Int32Array): ndta.NdTypedArray<TArray, T> {
     return ndta.NdTypedArrayNew<TArray, T>(data, shape, DataType);
+}
+
+export function NdInt32ArrayRandom(shape: Int32Array): NdTypedArray<TArray, T> {
+    return ndta.NdTypedArrayRandom<TArray, T>(shape, DataType);
 }
 
 export function NdInt32ArrayGetShape(self: ndta.NdTypedArray<TArray, T>): Int32Array {

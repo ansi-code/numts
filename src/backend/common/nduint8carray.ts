@@ -1,5 +1,6 @@
 import * as ta from "./typedarray";
 import * as ndta from "./ndtypedarray";
+import {NdTypedArray} from "./ndtypedarray";
 
 type TArray = Uint8ClampedArray;
 type T = i8;
@@ -7,6 +8,10 @@ const DataType = ta.DataType.i8;
 
 export function NdUint8ClampedArrayNew(data: TArray, shape: Int32Array): ndta.NdTypedArray<TArray, T> {
     return ndta.NdTypedArrayNew<TArray, T>(data, shape, DataType);
+}
+
+export function NdUint8ClampedArrayRandom(shape: Int32Array): NdTypedArray<TArray, T> {
+    return ndta.NdTypedArrayRandom<TArray, T>(shape, DataType);
 }
 
 export function NdUint8ClampedArrayGetShape(self: ndta.NdTypedArray<TArray, T>): Int32Array {

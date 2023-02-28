@@ -14,7 +14,7 @@ describe("Js tests", async () => {
         nt.NdInt8ArrayAdd(a, b);
         console.log(nt.NdInt8ArrayGetData(a));
 
-        console.log(nt.NdInt8ArraySlice(b, null));
+        console.log(nt.NdInt8ArraySlice(b, [[-1]]));
     }).timeout(60000);
 
     it("Check 2", async () => {
@@ -44,6 +44,26 @@ describe("Js tests", async () => {
         print(arr)
         print(arr.argmax(1))
          */
+    }).timeout(60000);
+
+    it("Check Profiling", async () => {
+        const nt = await backend();
+
+        const t = Date.now();
+
+        const shape = new Int32Array([20000, 3000]);
+
+        const a = nt.NdInt32ArrayRandom(shape);
+        console.log("Processing time (ms)", Date.now() - t);
+        const b = nt.NdInt32ArrayRandom(shape);
+        console.log("Processing time (ms)", Date.now() - t);
+        nt.NdInt32ArrayAdd(a, b);
+        console.log("Processing time (ms)", Date.now() - t);
+
+        nt.NdInt32ArraySoftmax(a);
+        console.log("Processing time (ms)", Date.now() - t);
+        nt.NdInt32ArraySoftmax(a);
+        console.log("Processing time (ms)", Date.now() - t);
     }).timeout(60000);
 
 });

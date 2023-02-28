@@ -1,3 +1,5 @@
+import * as crypto from "crypto";
+
 export enum DataType {
     i8,
     u8,
@@ -51,6 +53,29 @@ export function TypedArrayFromNumberArray<TArray extends TypedArray<T>, T extend
 export function TypedArrayFrom<TArray extends TypedArray<T>, T extends number>(source: TArray, type: DataType): TArray {
     const res = TypedArrayNew<TArray, T>(source.length, type);
     res.set(source);
+    return res;
+}
+
+export function TypedArrayRandom<TArray extends TypedArray<T>, T extends number>(length: u32, type: DataType): TArray {
+    const res = TypedArrayNew<TArray, T>(length, type);
+    for (let i: u32 = 0; i < length; i++) {
+        switch (type) {
+            case DataType.f32:
+            case DataType.f64:
+                res[i] = Math.random() as T;
+                break;
+            case DataType.i8:
+            case DataType.i16:
+            case DataType.i32:
+            case DataType.u8:
+            case DataType.u16:
+            case DataType.u32:
+                res[i] = Math.floor(Math.random() * 256) as T;
+                break;
+            default:
+                throw new Error(`Unsupported data type: ${type}`);
+        }
+    }
     return res;
 }
 
