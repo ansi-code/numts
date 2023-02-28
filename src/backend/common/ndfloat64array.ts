@@ -1,38 +1,106 @@
-import {NdTypedArray, NdTypedArrayAdd, NdTypedArrayArgmax, NdTypedArrayGet, NdTypedArrayGetData, NdTypedArrayGetShape, NdTypedArrayGetStrides, NdTypedArrayNew, NdTypedArraySet, NdTypedArrayUnravel} from "./ndtypedarray";
-import {DataType} from "./typedarray";
+import * as ta from "./typedarray";
+import * as ndta from "./ndtypedarray";
 
-export function NdFloat64ArrayNew(data: Float64Array, shape: Int32Array): NdTypedArray<Float64Array, f64> {
-    return NdTypedArrayNew<Float64Array, f64>(data, shape, DataType.f64);
+type TArray = Float64Array;
+type T = f64;
+const DataType = ta.DataType.f64;
+
+export function NdFloat64ArrayNew(data: TArray, shape: Int32Array): ndta.NdTypedArray<TArray, T> {
+    return ndta.NdTypedArrayNew<TArray, T>(data, shape, DataType);
 }
 
-export function NdFloat64ArrayAdd(self: NdTypedArray<Float64Array, f64>, other: NdTypedArray<Float64Array, f64>): void {
-    return NdTypedArrayAdd<Float64Array, f64>(self, other);
+export function NdFloat64ArrayGetShape(self: ndta.NdTypedArray<TArray, T>): Int32Array {
+    return ndta.NdTypedArrayGetShape<TArray, T>(self);
 }
 
-export function NdFloat64ArrayGet(self: NdTypedArray<Float64Array, f64>, index: Int32Array): f64 {
-    return NdTypedArrayGet<Float64Array, f64>(self, index);
+export function NdFloat64ArrayGetStrides(self: ndta.NdTypedArray<TArray, T>): Int32Array {
+    return ndta.NdTypedArrayGetStrides<TArray, T>(self);
 }
 
-export function NdFloat64ArraySet(self: NdTypedArray<Float64Array, f64>, index: Int32Array, value: f64): void {
-    return NdTypedArraySet<Float64Array, f64>(self, index, value);
+export function NdFloat64ArrayGetData(self: ndta.NdTypedArray<TArray, T>): TArray {
+    return ndta.NdTypedArrayGetData<TArray, T>(self);
 }
 
-export function NdFloat64ArrayUnravel(self: NdTypedArray<Float64Array, f64>, index: Int32Array): i32 {
-    return NdTypedArrayUnravel<Float64Array, f64>(self, index);
+export function NdFloat64ArrayGetType(self: ndta.NdTypedArray<TArray, T>): ta.DataType {
+    return ndta.NdTypedArrayGetType<TArray, T>(self);
 }
 
-export function NdFloat64ArrayGetShape(self: NdTypedArray<Float64Array, f64>): Int32Array {
-    return NdTypedArrayGetShape<Float64Array, f64>(self);
+export function NdFloat64ArrayReshape(self: ndta.NdTypedArray<TArray, T>, shape: Int32Array): void {
+    return ndta.NdTypedArrayReshape<TArray, T>(self, shape);
 }
 
-export function NdFloat64ArrayGetStrides(self: NdTypedArray<Float64Array, f64>): Int32Array {
-    return NdTypedArrayGetStrides<Float64Array, f64>(self);
+export function NdFloat64ArrayClone(self: ndta.NdTypedArray<TArray, T>): ndta.NdTypedArray<TArray, T> {
+    return ndta.NdTypedArrayClone<TArray, T>(self);
 }
 
-export function NdFloat64ArrayGetData(self: NdTypedArray<Float64Array, f64>): Float64Array {
-    return NdTypedArrayGetData<Float64Array, f64>(self);
+export function NdFloat64ArrayGet(self: ndta.NdTypedArray<TArray, T>, index: Int32Array): T {
+    return ndta.NdTypedArrayGet<TArray, T>(self, index);
 }
 
-export function NdFloat64ArrayArgmax(self: NdTypedArray<Float64Array, f64>, axis: i32 = -1): NdTypedArray<Int32Array, i32> {
-    return NdTypedArrayArgmax<Float64Array, f64>(self, axis);
+export function NdFloat64ArraySet(self: ndta.NdTypedArray<TArray, T>, index: Int32Array, value: T): void {
+    return ndta.NdTypedArraySet<TArray, T>(self, index, value);
+}
+
+export function NdFloat64ArrayUnravel(self: ndta.NdTypedArray<TArray, T>, index: Int32Array): i32 {
+    return ndta.NdTypedArrayUnravel<TArray, T>(self, index);
+}
+
+export function NdFloat64ArraySlice(self: ndta.NdTypedArray<TArray, T>, ...args: Array<i32 | Array<i32 | null> | null>): ndta.NdTypedArray<TArray, T> {
+    return ndta.NdTypedArraySlice<TArray, T>(self, ...args);
+}
+
+export function NdFloat64ArrayAdd(self: ndta.NdTypedArray<TArray, T>, other: ndta.NdTypedArray<TArray, T>): void {
+    return ndta.NdTypedArrayAdd<TArray, T>(self, other);
+}
+
+export function NdFloat64ArraySub(self: ndta.NdTypedArray<TArray, T>, other: ndta.NdTypedArray<TArray, T>): void {
+    return ndta.NdTypedArraySub<TArray, T>(self, other);
+}
+
+export function NdFloat64ArrayMax(self: ndta.NdTypedArray<TArray, T>, axis: i32 = -1): ndta.NdTypedArray<TArray, T> {
+    return ndta.NdTypedArrayMax<TArray, T>(self, axis);
+}
+
+export function NdFloat64ArrayMin(self: ndta.NdTypedArray<TArray, T>, axis: i32 = -1): ndta.NdTypedArray<TArray, T> {
+    return ndta.NdTypedArrayMin<TArray, T>(self, axis);
+}
+
+export function NdFloat64ArrayArgmax(self: ndta.NdTypedArray<TArray, T>, axis: i32 = -1): ndta.NdTypedArray<Int32Array, i32> {
+    return ndta.NdTypedArrayArgMax<TArray, T>(self, axis);
+}
+
+export function NdFloat64ArrayArgmin(self: ndta.NdTypedArray<TArray, T>, axis: i32 = -1): ndta.NdTypedArray<Int32Array, i32> {
+    return ndta.NdTypedArrayArgMin<TArray, T>(self, axis);
+}
+
+export function NdFloat64ArraySoftmax(self: ndta.NdTypedArray<TArray, T>): void {
+    return ndta.NdTypedArraySoftmax<TArray, T>(self);
+}
+
+export function NdFloat64ArrayTopK(self: ndta.NdTypedArray<TArray, T>, k: i32 = 1, axis: i32 = -1): ndta.NdTypedArray<Int32Array, i32> {
+    return ndta.NdTypedArrayTopK<TArray, T>(self, k, axis);
+}
+
+export function NdFloat64ArrayArgSort(self: ndta.NdTypedArray<TArray, T>, axis: i32 = -1, descending: boolean = true): ndta.NdTypedArray<Int32Array, i32> {
+    return ndta.NdTypedArrayArgSort<TArray, T>(self, axis, descending);
+}
+
+export function NdFloat64ArrayScatter(self: ndta.NdTypedArray<TArray, T>, axis: i32 = -1, indices: ndta.NdTypedArray<Int32Array, i32>, source: ndta.NdTypedArray<TArray, T>): void {
+    return ndta.NdTypedArrayScatter<TArray, T>(self, axis, indices, source);
+}
+
+export function NdFloat64ArrayWhere(self: ndta.NdTypedArray<TArray, T>, cond: (v: T) => u8): ndta.NdTypedArray<Uint8Array, u8> {
+    return ndta.NdTypedArrayWhere<TArray, T>(self, cond);
+}
+
+export function NdFloat64ArrayMaskedFill(self: ndta.NdTypedArray<TArray, T>, mask: ndta.NdTypedArray<Uint8Array, u8>, value: T): void {
+    return ndta.NdTypedArrayMaskedFill<TArray, T>(self, mask, value);
+}
+
+export function NdFloat64ArrayCumsum(self: ndta.NdTypedArray<TArray, T>, axis: i32 = -1): void {
+    return ndta.NdTypedArrayCumsum<TArray, T>(self, axis);
+}
+
+export function NdFloat64ArrayArgChoice(self: ndta.NdTypedArray<TArray, T>, size: i32 = 1, p: ndta.NdTypedArray<Float64Array, f64>): ndta.NdTypedArray<TArray, T> {
+    return ndta.NdTypedArrayArgChoice<TArray, T>(self, size, p);
 }
