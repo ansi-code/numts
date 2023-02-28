@@ -1,14 +1,14 @@
 import {DataType, TypedArrayArgQuickSort, TypedArrayEqual, TypedArrayFrom, TypedArrayFromNumberArray, TypedArrayNew} from "./typedarray";
 
 export class NdTypedArray<TArray extends TypedArray<T>, T> {
+    public data: TArray;
     public shape: Int32Array;
     public strides: Int32Array;
-    public data: TArray;
     public type: DataType;
 
-    constructor(shape: Int32Array, data: TArray, type: DataType) {
-        this.shape = shape;
+    constructor(data: TArray, shape: Int32Array, type: DataType) {
         this.data = data;
+        this.shape = shape;
         this.type = type;
 
         this.strides = new Int32Array(shape.length);
@@ -23,7 +23,7 @@ export function NdTypedArrayNew<TArray extends TypedArray<T>, T>(data: TArray, s
     if (data.length !== shape.reduce((a, b) => a * b, 1.0))
         throw new Error('Data and shape do not match');
 
-    return new NdTypedArray<TArray, T>(shape, data, type);
+    return new NdTypedArray<TArray, T>(data, shape, type);
 }
 
 export function NdTypedArrayGetShape<TArray extends TypedArray<T>, T>(self: NdTypedArray<TArray, T>): Int32Array {
@@ -46,8 +46,8 @@ export function NdTypedArrayReshape<TArray extends TypedArray<T>, T>(self: NdTyp
     self.shape = shape;
 }
 
-export function NdTypedArrayClone<TArray extends TypedArray<T>, T>(self: NdTypedArray<TArray, T>): NdTypedArray<TArray, T> {
-    return new NdTypedArray<TArray, T>(TypedArrayFrom(self.shape, DataType.i32), TypedArrayFrom(self.data, self.type), self.type);
+export function NdTypedArrayClone<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>): NdTypedArray<TArray, T> {
+    return new NdTypedArray<TArray, T>(TypedArrayFrom<TArray, T>(self.data, self.type), TypedArrayFrom<Int32Array, i32>(self.shape, DataType.i32), self.type);
 }
 
 export function NdTypedArrayGet<TArray extends TypedArray<T>, T>(self: NdTypedArray<TArray, T>, index: Int32Array): T {
@@ -91,7 +91,7 @@ export function NdTypedArraySub<TArray extends TypedArray<T>, T>(self: NdTypedAr
         self.data[i] = (self.data[i] - other.data[i]);
 }
 
-export function NdTypedArrayMax<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32 = -1): NdTypedArray<TArray, T> {
+export function NdTypedArrayMax<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32): NdTypedArray<TArray, T> {
     const ndim = self.shape.length;
     if (axis < -ndim || axis >= ndim) throw new Error("Invalid axis");
     if (axis < 0) axis += ndim;
@@ -105,7 +105,7 @@ export function NdTypedArrayMax<TArray extends TypedArray<T>, T extends number>(
         }
     }
 
-    const result = new NdTypedArray<TArray, T>(resultShape, TypedArrayNew<TArray, T>(resultLength, self.type), self.type);
+    const result = new NdTypedArray<TArray, T>(TypedArrayNew<TArray, T>(resultLength, self.type), resultShape, self.type);
     const axisStride = self.strides[axis];
     const axisLength = self.shape[axis];
 
@@ -123,7 +123,7 @@ export function NdTypedArrayMax<TArray extends TypedArray<T>, T extends number>(
     return result;
 }
 
-export function NdTypedArrayMin<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32 = -1): NdTypedArray<TArray, T> {
+export function NdTypedArrayMin<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32): NdTypedArray<TArray, T> {
     const ndim = self.shape.length;
     if (axis < -ndim || axis >= ndim) throw new Error("Invalid axis");
     if (axis < 0) axis += ndim;
@@ -137,7 +137,7 @@ export function NdTypedArrayMin<TArray extends TypedArray<T>, T extends number>(
         }
     }
 
-    const result = new NdTypedArray<TArray, T>(resultShape, TypedArrayNew<TArray, T>(resultLength, self.type), self.type);
+    const result = new NdTypedArray<TArray, T>(TypedArrayNew<TArray, T>(resultLength, self.type), resultShape, self.type);
     const axisStride = self.strides[axis];
     const axisLength = self.shape[axis];
 
@@ -155,7 +155,7 @@ export function NdTypedArrayMin<TArray extends TypedArray<T>, T extends number>(
     return result;
 }
 
-export function NdTypedArrayArgMax<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32 = -1): NdTypedArray<Int32Array, i32> {
+export function NdTypedArrayArgMax<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32): NdTypedArray<Int32Array, i32> {
     const ndim = self.shape.length;
     if (axis < -ndim || axis >= ndim) throw new Error("Invalid axis");
     if (axis < 0) axis += ndim;
@@ -189,7 +189,7 @@ export function NdTypedArrayArgMax<TArray extends TypedArray<T>, T extends numbe
     return result;
 }
 
-export function NdTypedArrayArgMin<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32 = -1): NdTypedArray<Int32Array, i32> {
+export function NdTypedArrayArgMin<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32): NdTypedArray<Int32Array, i32> {
     const ndim = self.shape.length;
     if (axis < -ndim || axis >= ndim) throw new Error("Invalid axis");
     if (axis < 0) axis += ndim;
@@ -223,9 +223,9 @@ export function NdTypedArrayArgMin<TArray extends TypedArray<T>, T extends numbe
     return result;
 }
 
-export function NdTypedArraySlice<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, ...args: Array<i32 | Array<i32 | null> | null>): NdTypedArray<TArray, T> {
-    const shape = new Int32Array(self.shape);
-    const strides = new Int32Array(self.strides);
+export function NdTypedArraySlice<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, args: Array<Array<i32>>): NdTypedArray<TArray, T> {
+    const shape = self.shape;
+    const strides = self.strides;
     const data = self.data;
 
     const dims = args.length;
@@ -238,19 +238,9 @@ export function NdTypedArraySlice<TArray extends TypedArray<T>, T extends number
 
     for (let i = 0; i < dims; i++) {
         let arg = args[i];
-        if (arg === null) {
-            start[dimIndex] = 0;
-            stop[dimIndex] = shape[dimIndex];
-            step[dimIndex] = 1;
-        } else if (arg instanceof Array) {
-            start[dimIndex] = arg[0] !== null ? arg[0] : 0;
-            stop[dimIndex] = arg[1] !== null ? arg[1] : shape[dimIndex];
-            step[dimIndex] = arg[2] !== null ? arg[2] : 1;
-        } else {
-            start[dimIndex] = arg;
-            stop[dimIndex] = arg + 1;
-            step[dimIndex] = 1;
-        }
+        start[dimIndex] = arg[0] !== -1 ? arg[0] : 0;
+        stop[dimIndex] = arg[1] !== -1 ? arg[1] : shape[dimIndex];
+        step[dimIndex] = arg[2] !== -1 ? arg[2] : 1;
         dimIndex++;
     }
 
@@ -269,17 +259,17 @@ export function NdTypedArraySlice<TArray extends TypedArray<T>, T extends number
             throw new Error("Invalid slice range");
         }
 
-        resultShape[i] = lengthVal;
+        resultShape[i] = lengthVal as i32;
         resultStrides[i] = strides[i] * stepVal;
         dataIndex += startVal * strides[i];
-        resultLength *= lengthVal;
+        resultLength *= lengthVal as i32;
 
         if (stopVal > shapeVal) {
             throw new Error("Invalid slice range");
         }
     }
 
-    const result = new NdTypedArray<TArray, T>(resultShape, TypedArrayNew<TArray, T>(resultLength, self.type), self.type);
+    const result = new NdTypedArray<TArray, T>(TypedArrayNew<TArray, T>(resultLength, self.type), resultShape, self.type);
 
     for (let i = 0; i < resultLength; i++) {
         result.data[i] = data[dataIndex];
@@ -299,24 +289,24 @@ export function NdTypedArraySlice<TArray extends TypedArray<T>, T extends number
 
 export function NdTypedArraySoftmax<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>): void {
     const n = self.shape[0];
-    const m = self.data.length / n;
+    const m = self.data.length / n as i32;
 
     for (let i = 0; i < n; i++) {
         let expSum = 0;
         for (let j = 0; j < m; j++) {
-            const expVal = Math.exp(self.data[i * m + j] as f64) as T;
+            const expVal = Math.exp(self.data[i * m + j]) as T;
             self.data[i * m + j] = expVal;
-            expSum += expVal;
+            expSum += expVal as i32;
         }
 
         const scale = 1 / expSum;
         for (let j = 0; j < m; j++) {
-            self.data[i * m + j] = self.data[i * m + j] * scale;
+            self.data[i * m + j] = (self.data[i * m + j]) * (scale as T);
         }
     }
 }
 
-export function NdTypedArrayTopK<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, k: i32 = 1, axis: i32 = -1): NdTypedArray<Int32Array, i32> {
+export function NdTypedArrayTopK<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, k: i32, axis: i32): NdTypedArray<Int32Array, i32> {
     if (k <= 0 || k > self.shape[axis]) {
         throw new Error("Invalid value of k");
     }
@@ -341,7 +331,8 @@ export function NdTypedArrayTopK<TArray extends TypedArray<T>, T extends number>
             indicesData[j] = j;
         }
 
-        const compare = (a: i32, b: i32): i32 => self.data[b] - self.data[a];
+        //const compare = (a: i32, b: i32): i32 => self.data[b] - self.data[a]; //TODO: FIX HERE
+        const compare = (a: i32, b: i32): i32 => b - a;
         indicesData.subarray(start, end).sort(compare);
 
         for (let j = start; j < start + k; j++) {
@@ -353,7 +344,7 @@ export function NdTypedArrayTopK<TArray extends TypedArray<T>, T extends number>
     return result;
 }
 
-export function NdTypedArrayArgSort<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32 = -1, descending: boolean = true): NdTypedArray<Int32Array, i32> {
+export function NdTypedArrayArgSort<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32, descending: boolean = true): NdTypedArray<Int32Array, i32> {
     const shape = self.shape;
     const rank = shape.length;
     axis = axis < 0 ? rank + axis : axis;
@@ -365,7 +356,7 @@ export function NdTypedArrayArgSort<TArray extends TypedArray<T>, T extends numb
     const indices = new Int32Array(self.data.length);
     for (let i = 0; i < indices.length; i++) indices[i] = i;
 
-    const slice = new Int32Array(axisSize);
+    const slice = TypedArrayNew<TArray, T>(axisSize, self.type);
 
     for (let i = 0; i < otherSize; i++) {
         const sliceStart = i * sliceSize;
@@ -378,14 +369,14 @@ export function NdTypedArrayArgSort<TArray extends TypedArray<T>, T extends numb
                 slice[l] = self.data[index + k];
             }
 
-            TypedArrayArgQuickSort(slice, indices.subarray(index / sliceSize, (index + sliceSize) / sliceSize), 0, sliceSize - 1, descending);
+            TypedArrayArgQuickSort<TArray, T>(slice, indices.subarray(index / sliceSize, (index + sliceSize) / sliceSize), 0, sliceSize - 1, descending);
         }
     }
 
     return new NdTypedArray<Int32Array, i32>(indices, shape, DataType.i32);
 }
 
-export function NdTypedArrayScatter<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32 = -1, indices: NdTypedArray<Int32Array, i32>, source: NdTypedArray<TArray, T>): void {
+export function NdTypedArrayScatter<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32, indices: NdTypedArray<Int32Array, i32>, source: NdTypedArray<TArray, T>): void {
     // Ensure that the axis is within the bounds of the shape.
     if (axis < -self.shape.length || axis >= self.shape.length) {
         throw new Error("axis out of bounds");
@@ -399,7 +390,7 @@ export function NdTypedArrayScatter<TArray extends TypedArray<T>, T extends numb
     const sourceShape = source.shape;
     const expectedIndicesShape = self.shape.slice();
     expectedIndicesShape[axis] = sourceShape[axis];
-    if (!TypedArrayEqual(indicesShape, expectedIndicesShape)) {
+    if (!TypedArrayEqual<Int32Array, i32>(indicesShape, expectedIndicesShape)) {
         throw new Error("indices array has incorrect shape");
     }
 
@@ -408,7 +399,7 @@ export function NdTypedArrayScatter<TArray extends TypedArray<T>, T extends numb
     const scatterIndices = new Int32Array(self.data.length);
     for (let i = 0; i < self.data.length; i++) {
         const offset = i % self.strides[axis];
-        const index = Math.floor(i / self.strides[axis]);
+        const index = Math.floor(i / self.strides[axis]) as i32;
         scatterIndices[i] = index * self.strides[axis] + indicesView[offset];
     }
 
@@ -429,7 +420,7 @@ export function NdTypedArrayWhere<TArray extends TypedArray<T>, T extends number
 }
 
 export function NdTypedArrayMaskedFill<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, mask: NdTypedArray<Uint8Array, u8>, value: T): void {
-    if (!TypedArrayEqual(self.shape, mask.shape)) {
+    if (!TypedArrayEqual<Int32Array, i32>(self.shape, mask.shape)) {
         throw new Error("mask array has incorrect shape");
     }
 
@@ -438,7 +429,7 @@ export function NdTypedArrayMaskedFill<TArray extends TypedArray<T>, T extends n
             self.data[i] = value;
 }
 
-export function NdTypedArrayCumsum<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32 = -1): void {
+export function NdTypedArrayCumsum<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, axis: i32): void {
     const shape = self.shape;
     const strides = self.strides;
     const data = self.data;
@@ -482,7 +473,7 @@ export function NdTypedArrayCumsum<TArray extends TypedArray<T>, T extends numbe
     }
 }
 
-export function NdTypedArrayArgChoice<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, size: i32 = 1, p: NdTypedArray<Float64Array, f64>): NdTypedArray<TArray, T> {
+export function NdTypedArrayArgChoice<TArray extends TypedArray<T>, T extends number>(self: NdTypedArray<TArray, T>, size: i32, p: NdTypedArray<Float64Array, f64>): NdTypedArray<TArray, T> {
     const length = self.shape[0];
     const cumSum = new Float64Array(length);
     cumSum[0] = p.data[0];

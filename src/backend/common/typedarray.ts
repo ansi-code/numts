@@ -43,13 +43,13 @@ export function TypedArrayNewFilled<TArray extends TypedArray<T>, T extends numb
 }
 
 export function TypedArrayFromNumberArray<TArray extends TypedArray<T>, T extends number>(source: Array<number>, type: DataType): TArray {
-    const res = TypedArrayNew<TArray, T>(self.length, type);
+    const res = TypedArrayNew<TArray, T>(source.length, type);
     res.set(source);
     return res;
 }
 
 export function TypedArrayFrom<TArray extends TypedArray<T>, T extends number>(source: TArray, type: DataType): TArray {
-    const res = TypedArrayNew<TArray, T>(self.length, type);
+    const res = TypedArrayNew<TArray, T>(source.length, type);
     res.set(source);
     return res;
 }
@@ -63,19 +63,19 @@ export function TypedArrayArgQuickSort<TArray extends TypedArray<T>, T extends n
     let i = left - 1;
     let j = right + 1;
 
-    const compare = <T extends number>(a: T, b: T, descending: boolean): i32 => descending ? b - a : a - b;
+    const compare = (a: T, b: T, descending: boolean): T => (descending ? b - a : a - b) as T;
 
     while (true) {
-        do i++; while (compare(self[i], pivotValue, descending) < 0);
-        do j--; while (compare(self[j], pivotValue, descending) > 0);
+        do i++; while (compare(self[i] as T, pivotValue as T, descending) < 0);
+        do j--; while (compare(self[j] as T, pivotValue as T, descending) > 0);
         if (i >= j) break;
 
-        TypedArraySwap(self, i, j);
-        TypedArraySwap(indices, i, j);
+        TypedArraySwap<TArray, T>(self, i, j);
+        TypedArraySwap<Int32Array, i32>(indices, i, j);
     }
 
-    TypedArrayArgQuickSort(self, indices, left, j, descending);
-    TypedArrayArgQuickSort(self, indices, j + 1, right, descending);
+    TypedArrayArgQuickSort<TArray, T>(self, indices, left, j, descending);
+    TypedArrayArgQuickSort<TArray, T>(self, indices, j + 1, right, descending);
 }
 
 export function TypedArraySwap<TArray extends TypedArray<T>, T extends number>(self: TArray, i: i32, j: i32): void {

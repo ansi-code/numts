@@ -45,8 +45,8 @@ export function NdUint8ClampedArrayUnravel(self: ndta.NdTypedArray<TArray, T>, i
     return ndta.NdTypedArrayUnravel<TArray, T>(self, index);
 }
 
-export function NdUint8ClampedArraySlice(self: ndta.NdTypedArray<TArray, T>, ...args: Array<i32 | Array<i32 | null> | null>): ndta.NdTypedArray<TArray, T> {
-    return ndta.NdTypedArraySlice<TArray, T>(self, ...args);
+export function NdUint8ClampedArraySlice(self: ndta.NdTypedArray<TArray, T>, args: Array<Array<i32>>): ndta.NdTypedArray<TArray, T> {
+    return ndta.NdTypedArraySlice<TArray, T>(self, args);
 }
 
 export function NdUint8ClampedArrayAdd(self: ndta.NdTypedArray<TArray, T>, other: ndta.NdTypedArray<TArray, T>): void {
@@ -57,19 +57,19 @@ export function NdUint8ClampedArraySub(self: ndta.NdTypedArray<TArray, T>, other
     return ndta.NdTypedArraySub<TArray, T>(self, other);
 }
 
-export function NdUint8ClampedArrayMax(self: ndta.NdTypedArray<TArray, T>, axis: i32 = -1): ndta.NdTypedArray<TArray, T> {
+export function NdUint8ClampedArrayMax(self: ndta.NdTypedArray<TArray, T>, axis: i32): ndta.NdTypedArray<TArray, T> {
     return ndta.NdTypedArrayMax<TArray, T>(self, axis);
 }
 
-export function NdUint8ClampedArrayMin(self: ndta.NdTypedArray<TArray, T>, axis: i32 = -1): ndta.NdTypedArray<TArray, T> {
+export function NdUint8ClampedArrayMin(self: ndta.NdTypedArray<TArray, T>, axis: i32): ndta.NdTypedArray<TArray, T> {
     return ndta.NdTypedArrayMin<TArray, T>(self, axis);
 }
 
-export function NdUint8ClampedArrayArgmax(self: ndta.NdTypedArray<TArray, T>, axis: i32 = -1): ndta.NdTypedArray<Int32Array, i32> {
+export function NdUint8ClampedArrayArgmax(self: ndta.NdTypedArray<TArray, T>, axis: i32): ndta.NdTypedArray<Int32Array, i32> {
     return ndta.NdTypedArrayArgMax<TArray, T>(self, axis);
 }
 
-export function NdUint8ClampedArrayArgmin(self: ndta.NdTypedArray<TArray, T>, axis: i32 = -1): ndta.NdTypedArray<Int32Array, i32> {
+export function NdUint8ClampedArrayArgmin(self: ndta.NdTypedArray<TArray, T>, axis: i32): ndta.NdTypedArray<Int32Array, i32> {
     return ndta.NdTypedArrayArgMin<TArray, T>(self, axis);
 }
 
@@ -77,15 +77,15 @@ export function NdUint8ClampedArraySoftmax(self: ndta.NdTypedArray<TArray, T>): 
     return ndta.NdTypedArraySoftmax<TArray, T>(self);
 }
 
-export function NdUint8ClampedArrayTopK(self: ndta.NdTypedArray<TArray, T>, k: i32 = 1, axis: i32 = -1): ndta.NdTypedArray<Int32Array, i32> {
+export function NdUint8ClampedArrayTopK(self: ndta.NdTypedArray<TArray, T>, k: i32, axis: i32): ndta.NdTypedArray<Int32Array, i32> {
     return ndta.NdTypedArrayTopK<TArray, T>(self, k, axis);
 }
 
-export function NdUint8ClampedArrayArgSort(self: ndta.NdTypedArray<TArray, T>, axis: i32 = -1, descending: boolean = true): ndta.NdTypedArray<Int32Array, i32> {
+export function NdUint8ClampedArrayArgSort(self: ndta.NdTypedArray<TArray, T>, axis: i32, descending: boolean = true): ndta.NdTypedArray<Int32Array, i32> {
     return ndta.NdTypedArrayArgSort<TArray, T>(self, axis, descending);
 }
 
-export function NdUint8ClampedArrayScatter(self: ndta.NdTypedArray<TArray, T>, axis: i32 = -1, indices: ndta.NdTypedArray<Int32Array, i32>, source: ndta.NdTypedArray<TArray, T>): void {
+export function NdUint8ClampedArrayScatter(self: ndta.NdTypedArray<TArray, T>, axis: i32, indices: ndta.NdTypedArray<Int32Array, i32>, source: ndta.NdTypedArray<TArray, T>): void {
     return ndta.NdTypedArrayScatter<TArray, T>(self, axis, indices, source);
 }
 
@@ -97,10 +97,10 @@ export function NdUint8ClampedArrayMaskedFill(self: ndta.NdTypedArray<TArray, T>
     return ndta.NdTypedArrayMaskedFill<TArray, T>(self, mask, value);
 }
 
-export function NdUint8ClampedArrayCumsum(self: ndta.NdTypedArray<TArray, T>, axis: i32 = -1): void {
+export function NdUint8ClampedArrayCumsum(self: ndta.NdTypedArray<TArray, T>, axis: i32): void {
     return ndta.NdTypedArrayCumsum<TArray, T>(self, axis);
 }
 
-export function NdUint8ClampedArrayArgChoice(self: ndta.NdTypedArray<TArray, T>, size: i32 = 1, p: ndta.NdTypedArray<Float64Array, f64>): ndta.NdTypedArray<TArray, T> {
+export function NdUint8ClampedArrayArgChoice(self: ndta.NdTypedArray<TArray, T>, size: i32, p: ndta.NdTypedArray<Float64Array, f64>): ndta.NdTypedArray<TArray, T> {
     return ndta.NdTypedArrayArgChoice<TArray, T>(self, size, p);
 }
