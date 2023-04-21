@@ -502,3 +502,15 @@ export function NdTypedArrayArgChoice<TArray extends TypedArray<T>, T extends nu
 
     return result;
 }
+
+// SIMD
+
+import { f32x4, v128 } from "simd";
+
+export function NdTypedArraySIMDAdd<TArray extends TypedArray<T>, T>(self: NdTypedArray<TArray, T>, other: NdTypedArray<TArray, T>): void {
+    if (self.shape.length !== other.shape.length)
+        throw new Error('Shapes do not match');
+
+    for (let i = 0; i < self.data.length; i++)
+        self.data[i] = (self.data[i] + other.data[i]);
+}

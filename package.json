@@ -13,7 +13,7 @@
     "pipeline:asc": "npm run build:asc && npm run encode:asc",
     "build:prod": "webpack --mode production",
     "build:prod:watch": "webpack --mode production --watch",
-    "postinstall": "npm run pipeline:asc",
+    "prepare": "npm run pipeline:asc",
     "prepublish": "npm run pipeline:asc && npm run build:prod",
     "publish:public": "npm publish --access public"
   },

@@ -14,11 +14,19 @@ describe("Wasm tests", async () => {
     }).timeout(60000);
 
     it("Check 2", async () => {
+
+
         const a = await NdArray.From([1, 2, 3, 4, 5, 6], [2, 3], "i8", "wasm");
         const b = await NdArray.From([-1, -2, -3, -4, -5, -6], [2, 3], "i8", "wasm");
-        console.log(a.getData());
         a.add(b);
         console.log(a.getData());
+
+        const a1 = await NdArray.From([1, 2, 3, 4, 5, 6], [2, 3], "f32", "js");
+        const b1 = await NdArray.From([-1, -2, -3, -4, -5, -6], [2, 3], "f32", "js");
+        a1.add(b1);
+        console.log(a1.getData());
+
+
     }).timeout(60000);
 
     it("Check 3", async () => {
@@ -35,23 +43,23 @@ describe("Wasm tests", async () => {
         console.log(nt.NdInt32ArrayGetData(d));
     }).timeout(60000);
 
-    it("Check Profiling", async () => {
+    it("Check Profiling 1", async () => {
         const nt = await backend();
 
         const t = Date.now();
 
-        const shape = new Int32Array([20000, 3000]);
+        const shape = new Int32Array([20000, 8000]);
 
-        const a = nt.NdInt32ArrayRandom(shape);
+        const a = nt.NdFloat32ArrayRandom(shape);
         console.log("Processing time (ms)", Date.now() - t);
-        const b = nt.NdInt32ArrayRandom(shape);
+        const b = nt.NdFloat32ArrayRandom(shape);
         console.log("Processing time (ms)", Date.now() - t);
-        nt.NdInt32ArrayAdd(a, b);
+        nt.NdFloat32ArrayAdd(a, b);
         console.log("Processing time (ms)", Date.now() - t);
 
-        nt.NdInt32ArraySoftmax(a);
+        nt.NdFloat32ArraySoftmax(a);
         console.log("Processing time (ms)", Date.now() - t);
-        nt.NdInt32ArraySoftmax(a);
+        nt.NdFloat32ArraySoftmax(a);
         console.log("Processing time (ms)", Date.now() - t);
     }).timeout(60000);
 

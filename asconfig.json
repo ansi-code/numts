@@ -1,6 +1,7 @@
 {
   "entries": ["src/backend/wasm/asc/index.asc.ts"],
   "options": {
+    "runtime": "minimal",
     "bindings": "raw",
     "outFile": "src/backend/wasm/asc/build/index.wasm"
   },
@@ -14,7 +15,8 @@
       "optimizeLevel": 3,
       "shrinkLevel": 0,
       "converge": false,
-      "noAssert": true
+      "noAssert": true,
+      "enable": ["simd"]
     }
   }
 }

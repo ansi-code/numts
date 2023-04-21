@@ -51,7 +51,7 @@ describe("Js tests", async () => {
 
         const t = Date.now();
 
-        const shape = new Int32Array([20000, 3000]);
+        const shape = new Int32Array([20000, 8000]);
 
         const a = nt.NdInt32ArrayRandom(shape);
         console.log("Processing time (ms)", Date.now() - t);
@@ -63,6 +63,26 @@ describe("Js tests", async () => {
         nt.NdInt32ArraySoftmax(a);
         console.log("Processing time (ms)", Date.now() - t);
         nt.NdInt32ArraySoftmax(a);
+        console.log("Processing time (ms)", Date.now() - t);
+    }).timeout(60000);
+
+    it("Check Profiling 1", async () => {
+        const nt = await backend();
+
+        const t = Date.now();
+
+        const shape = new Int32Array([20000, 8000]);
+
+        const a = nt.NdFloat64ArrayRandom(shape);
+        console.log("Processing time (ms)", Date.now() - t);
+        const b = nt.NdFloat64ArrayRandom(shape);
+        console.log("Processing time (ms)", Date.now() - t);
+        nt.NdFloat64ArrayAdd(a, b);
+        console.log("Processing time (ms)", Date.now() - t);
+
+        nt.NdFloat64ArraySoftmax(a);
+        console.log("Processing time (ms)", Date.now() - t);
+        nt.NdFloat64ArraySoftmax(a);
         console.log("Processing time (ms)", Date.now() - t);
     }).timeout(60000);
 
